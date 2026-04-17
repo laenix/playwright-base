@@ -43,7 +43,11 @@ func (b *Browser) OpenBrowser(ctx context.Context, args map[string]interface{}) 
 		b.pw = pwTmp
 		b.browser = pw
 
-		page, err := b.browser.NewPage()
+		context, err := b.browser.NewContext(playwright.BrowserNewContextOptions{
+			IgnoreHttpsErrors: playwright.Bool(true),
+		})
+
+		page, err := context.NewPage()
 		if err != nil {
 			return err
 		}
